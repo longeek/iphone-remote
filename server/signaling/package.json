@@ -1,0 +1,21 @@
+{
+  "name": "iphone-remote-signaling",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/start.js",
+    "test": "node --test test/protocol.test.js",
+    "test:coverage": "c8 --check-coverage --lines 90 --functions 90 --branches 90 node --test test/protocol.test.js",
+    "test:e2e": "node --test ../e2e/scripts/e2e-signaling-test.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "c8": "^11.0.0"
+  }
+}

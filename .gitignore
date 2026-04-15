@@ -1,0 +1,35 @@
+# Build
+**/bin/
+**/obj/
+**/build/
+**/.gradle/
+**/local.properties
+**/*.user
+**/*.suo
+**/.vs/
+**/DerivedData/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Node
+node_modules/
+npm-debug.log*
+coverage/
+.nyc_output/
+
+# .NET test
+TestResults/
+
+# Android
+*.apk
+*.aab
+*.dex
+captures/
+gradle-8.2-bin.zip
+
+# OS
+.DS_Store
+Thumbs.db

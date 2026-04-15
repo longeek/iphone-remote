@@ -1,0 +1,71 @@
+name: ci
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  signaling:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server/signaling
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm install
+      - run: npm test
+
+  android-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Gradle wrapper and assemble (app + androidTest)
+        working-directory: apps/android
+        run: |
+          set -e
+          curl -fsSL -o gradle.zip https://services.gradle.org/distributions/gradle-8.2-bin.zip
+          unzip -q gradle.zip
+          ./gradle-8.2/bin/gradle wrapper --gradle-version 8.2
+          chmod +x gradlew
+          ./gradlew :app:assembleDebug :app:assembleDebugAndroidTest --no-daemon
+
+  android-unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Run JVM unit tests
+        working-directory: apps/android
+        run: |
+          set -e
+          curl -fsSL -o gradle.zip https://services.gradle.org/distributions/gradle-8.2-bin.zip
+          unzip -q gradle.zip
+          ./gradle-8.2/bin/gradle wrapper --gradle-version 8.2
+          chmod +x gradlew
+          ./gradlew :app:testDebugUnitTest --no-daemon
+
+  windows-host:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: host/windows
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - run: dotnet restore src/RemoteHost/RemoteHost.csproj
+      - run: dotnet build src/RemoteHost/RemoteHost.csproj -c Release
+      - run: dotnet test src/RemoteHost.Tests/RemoteHost.Tests.csproj

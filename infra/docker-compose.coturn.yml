@@ -1,0 +1,21 @@
+# Coturn TURN/STUN — edit secrets before production use.
+# Usage: docker compose -f docker-compose.coturn.yml up -d
+#
+# Clients set ICE_SERVERS, e.g.:
+#   turn:YOUR_PUBLIC_IP:3478;demo;demo
+# (match username/password below)
+
+services:
+  coturn:
+    image: coturn/coturn:4.6.2
+    network_mode: host
+    command:
+      - "-n"
+      - "--log-file=stdout"
+      - "--listening-port=3478"
+      - "--min-port=49152"
+      - "--max-port=65535"
+      - "--fingerprint"
+      - "--lt-cred-mech"
+      - "--user=demo:demo"
+      - "--realm=remote"

@@ -1,0 +1,12 @@
+# 轻量冒烟：仅依赖可见文案（不依赖 Compose testTag id）。
+# 更完整的 App 路径见 android-login-and-session.yaml
+
+appId: com.iphoneremote.remote
+---
+- launchApp
+- assertVisible: "Signaling WebSocket"
+- tapOn: "Connect"
+- extendedWaitUntil:
+    visible:
+      id: "e2e_session_root"
+    timeout: 20000

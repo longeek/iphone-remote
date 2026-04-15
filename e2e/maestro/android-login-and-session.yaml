@@ -1,0 +1,22 @@
+# Full app flow: login → session shell (same as Compose instrumentation).
+# Run with: maestro test e2e/maestro/android-login-and-session.yaml
+# Prereq: Debug APK installed (./gradlew :app:installDebug).
+
+appId: com.iphoneremote.remote
+---
+- launchApp:
+    clearState: true
+- assertVisible:
+    id: "e2e_login_root"
+- assertVisible:
+    id: "e2e_field_signaling"
+- assertVisible:
+    id: "e2e_button_connect"
+- tapOn:
+    id: "e2e_button_connect"
+- extendedWaitUntil:
+    visible:
+      id: "e2e_session_root"
+    timeout: 20000
+- assertVisible:
+    id: "e2e_remote_surface"

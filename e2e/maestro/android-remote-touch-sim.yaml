@@ -1,0 +1,16 @@
+# Simulates remote control: after session is up, tap center of the video surface.
+# Use after android-login-and-session or when already on session screen.
+# Optional: pair with a running Windows host + signaling for end-to-end.
+
+appId: com.iphoneremote.remote
+---
+- launchApp
+- tapOn:
+    id: "e2e_button_connect"
+- extendedWaitUntil:
+    visible:
+      id: "e2e_remote_surface"
+    timeout: 20000
+# Center tap (Maestro 1.36+ point syntax); simulates one click on remote desktop.
+- tapOn:
+    point: "50%,55%"

@@ -1,0 +1,50 @@
+# E2E: Login → Connect → Verify session UI → Disconnect → Return to login screen.
+# Verifies the new disconnect button and keyboard toggle features.
+# Prereq: Debug APK installed (./gradlew :app:installDebug).
+
+appId: com.iphoneremote.remote
+---
+- launchApp:
+    clearState: true
+
+# ── Login screen ──
+- assertVisible:
+    id: "e2e_login_root"
+- assertVisible:
+    id: "e2e_field_signaling"
+- assertVisible:
+    id: "e2e_field_room"
+- assertVisible:
+    id: "e2e_button_connect"
+
+# ── Enter session ──
+- tapOn:
+    id: "e2e_button_connect"
+- extendedWaitUntil:
+    visible:
+      id: "e2e_session_root"
+    timeout: 20000
+- assertVisible:
+    id: "e2e_remote_surface"
+
+# ── Verify new UI elements ──
+- assertVisible:
+    id: "e2e_button_disconnect"
+- assertVisible:
+    id: "e2e_button_keyboard"
+
+# ── Toggle keyboard panel ──
+- tapOn:
+    id: "e2e_button_keyboard"
+- extendedWaitUntil:
+    visible:
+      id: "e2e_text_input"
+    timeout: 5000
+
+# ── Disconnect and return to login ──
+- tapOn:
+    id: "e2e_button_disconnect"
+- extendedWaitUntil:
+    visible:
+      id: "e2e_login_root"
+    timeout: 10000

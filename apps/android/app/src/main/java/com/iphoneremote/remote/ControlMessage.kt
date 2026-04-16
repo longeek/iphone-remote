@@ -9,6 +9,7 @@ object ControlMessage {
         val nx = x.coerceIn(0f, 1f)
         val ny = y.coerceIn(0f, 1f)
         return """{"v":$VERSION,"t":"down","x":$nx,"y":$ny,"b":$button}""" +
+               "\n" +
                """{"v":$VERSION,"t":"up","x":$nx,"y":$ny,"b":$button}"""
     }
 

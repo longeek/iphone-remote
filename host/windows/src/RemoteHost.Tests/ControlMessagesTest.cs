@@ -404,6 +404,8 @@ public class MockInjectorTest
         Assert.Equal(100, injector.Moves.Count);
     }
 }
+
+public class SessionStatsTest
 {
     [Fact]
     public void SessionStats_DefaultValues()

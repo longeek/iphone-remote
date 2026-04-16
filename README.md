@@ -84,4 +84,4 @@ cd apps/android
 
 ## 许可
 
-按项目需要添加 LICENSE。
+本项目基于 [MIT License](LICENSE) 开源。
